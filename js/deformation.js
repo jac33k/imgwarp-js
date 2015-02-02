@@ -13,7 +13,7 @@ ImgWarper.Warper = function(
   this.imgData = imgData.data;
   canvas.width = source.width;
   canvas.height = source.height;
-  this.bilinearInterpolation = 
+  this.bilinearInterpolation =
     new ImgWarper.BilinearInterpolation(this.width, this.height, canvas);
 
   this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -35,7 +35,7 @@ ImgWarper.Warper = function(
 
 ImgWarper.Warper.prototype.warp = function(fromPoints, toPoints) {
   var t0 = (new Date()).getTime();
-  var deformation = 
+  var deformation =
     new ImgWarper.AffineDeformation(toPoints, fromPoints, this.alpha);
   var transformedGrid = [];
   for (var i = 0; i < this.grid.length; ++i) {
@@ -52,16 +52,11 @@ ImgWarper.Warper.prototype.warp = function(fromPoints, toPoints) {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   this.ctx.putImageData(newImg, 0, 0);
   var t2 = (new Date()).getTime();
-  document.getElementById('fps').innerHTML = 
-    'Deform: ' + (t1 - t0) + 'ms; interpolation: ' + (t2 - t1) + 'ms';
-  if (document.getElementById('show-grid').checked) {
-    this.drawGrid(fromPoints, toPoints);
-  }
 }
 
 ImgWarper.Warper.prototype.drawGrid = function(fromPoints, toPoints) {
   // Forward warping.
-  var deformation = 
+  var deformation =
     new ImgWarper.AffineDeformation(fromPoints, toPoints, this.alpha);
   var context = this.canvas.getContext("2d");
   for (var i = 0; i < this.grid.length; ++i) {
@@ -83,10 +78,10 @@ ImgWarper.AffineDeformation = function(fromPoints, toPoints, alpha) {
   this.qRelative = null;
   this.A = null;
   if (fromPoints.length != toPoints.length) {
-    console.error('Points are not of same length.'); 
+    console.error('Points are not of same length.');
     return;
   }
-  this.n = fromPoints.length;  
+  this.n = fromPoints.length;
   this.fromPoints = fromPoints;
   this.toPoints = toPoints;
   this.alpha = alpha;
@@ -94,16 +89,16 @@ ImgWarper.AffineDeformation = function(fromPoints, toPoints, alpha) {
 
 ImgWarper.AffineDeformation.prototype.pointMover = function (point){
   if (null == this.pRelative || this.pRelative.length < this.n) {
-    this.pRelative = new Array(this.n); 
+    this.pRelative = new Array(this.n);
   }
   if (null == this.qRelative || this.qRelative.length < this.n) {
-    this.qRelative = new Array(this.n); 
+    this.qRelative = new Array(this.n);
   }
   if (null == this.w || this.w.length < this.n) {
     this.w = new Array(this.n);
   }
   if (null == this.A || this.A.length < this.n) {
-    this.A = new Array(this.n); 
+    this.A = new Array(this.n);
   }
 
   for (var i = 0; i < this.n; ++i) {
@@ -131,7 +126,7 @@ ImgWarper.AffineDeformation.prototype.pointMover = function (point){
       .dotP(this.pRelative[j]) * this.w[j];
   }
 
-  var r = qAverage; //r is an point 
+  var r = qAverage; //r is an point
   for (var j = 0; j < this.n; ++j) {
     r = r.add(this.qRelative[j].multiply_d(this.A[j]));
   }
