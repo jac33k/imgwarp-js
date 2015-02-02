@@ -2,5 +2,6 @@
   "name": "imgwarp-js",
   "version": "0.0.1",
   "homepage": "https://github.com/jac33k/imgwarp-js",
+  "main": "dist/imgwarp.js",
   "license": "MIT"
 }
