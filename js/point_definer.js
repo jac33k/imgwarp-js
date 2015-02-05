@@ -1,8 +1,8 @@
 var ImgWarper = ImgWarper || {};
 
-ImgWarper.PointDefiner = function(canvas, image, imgData) {
-  this.oriPoints = new Array();
-  this.dstPoints = new Array();
+ImgWarper.PointDefiner = function(canvas, image, imgData, oriPoints, dstPoints) {
+  this.oriPoints = oriPoints;
+  this.dstPoints = dstPoints;
 
   //set up points for change;
   var c = canvas;

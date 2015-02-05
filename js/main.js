@@ -15,7 +15,24 @@ $(document).ready(function(){
     if (warper) {
       delete warper;
     }
-    warper = new ImgWarper.PointDefiner(canvas, img, imageData);
+
+    var oriPoints = [
+      new ImgWarper.Point(0, 0),
+      new ImgWarper.Point(0, 256),
+      new ImgWarper.Point(256, 0),
+      new ImgWarper.Point(256, 256)
+    ];
+
+    var dstPoints = [
+      new ImgWarper.Point(50,50),
+      new ImgWarper.Point(10,300),
+      new ImgWarper.Point(200,10),
+      new ImgWarper.Point(300,300)
+    ];
+
+    warper = new ImgWarper.PointDefiner(canvas, img, imageData, oriPoints, dstPoints);
+
+    warper.redraw();
   });
 });
 
